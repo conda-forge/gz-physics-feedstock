@@ -16,7 +16,6 @@ source:
     patches:
       - disable_fake_install.patch
       - disable_integration_tests.patch  # [win]
-      - 465.patch
 
 build:
   number: 0
@@ -44,7 +43,7 @@ outputs:
         - libsdformat13
         - eigen
         - assimp
-        - dartsim
+        - dartsim 6.12
         - libode
         - bullet-cpp
 
