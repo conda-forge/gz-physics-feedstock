@@ -44,7 +44,7 @@ outputs:
         - libsdformat13
         - eigen
         - assimp
-        - dartsim 6.12
+        - dartsim
         - libode
         - bullet-cpp
 
