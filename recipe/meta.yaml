@@ -13,7 +13,7 @@ package:
 
 source:
   - url: https://github.com/gazebosim/{{ repo_name }}/archive/{{ repo_name }}{{ version }}.tar.gz
-    sha256: b182071624fd13aa2cff6ca4d5c8afaaf2abaca19f664a8db22deac1e57b3ee2
+    sha256: 30be46667ab4db00de64580019ab4f27c0cd0e517b463750188e07f2e89c7fa9
     patches:
       - disable_fake_install.patch
       - disable_integration_tests.patch  # [win]
