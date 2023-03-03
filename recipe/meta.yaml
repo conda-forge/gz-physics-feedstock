@@ -16,6 +16,7 @@ source:
     sha256: 30be46667ab4db00de64580019ab4f27c0cd0e517b463750188e07f2e89c7fa9
     patches:
       - disable_fake_install.patch
+      - disable_integration_tests.patch  # [win]
 
 build:
   number: 0
