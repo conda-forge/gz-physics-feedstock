@@ -1,3 +1,6 @@
+set "CC=clang-cl.exe"
+set "CXX=clang-cl.exe"
+
 mkdir build
 cd build
 
