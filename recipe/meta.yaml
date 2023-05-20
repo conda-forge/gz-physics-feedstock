@@ -35,8 +35,6 @@ outputs:
         - ninja
         - cmake
         - pkg-config
-        - clang  # [win]
-        - lld  # [win]
       host:
         - libgz-cmake3
         - libgz-plugin2
