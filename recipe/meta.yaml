@@ -16,9 +16,10 @@ source:
     patches:
       - disable_fake_install.patch
       - disable_integration_tests.patch  # [win]
+      - 507.patch
 
 build:
-  number: 2
+  number: 3
 
 outputs:
   - name: {{ cxx_name }}
