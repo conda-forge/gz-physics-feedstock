@@ -1,41 +1,7 @@
-From 63dcd145e5bf3e46e8051b96896208b8e6057241 Mon Sep 17 00:00:00 2001
-From: Silvio Traversaro <silvio.traversaro@iit.it>
-Date: Fri, 21 Apr 2023 18:04:29 +0200
-Subject: [PATCH 1/3] Add optional binary relocatability
-
-Signed-off-by: Silvio Traversaro <silvio.traversaro@iit.it>
----
- CMakeLists.txt                                |  9 ++--
- dartsim/CMakeLists.txt                        |  4 +-
- include/gz/physics/InstallationDirectories.hh | 43 +++++++++++++++++++
- include/gz/physics/config.hh.in               |  2 +-
- src/CMakeLists.txt                            | 13 +++++-
- src/InstallationDirectories.cc                | 36 ++++++++++++++++
- test/integration/CMakeLists.txt               |  4 +-
- test/performance/CMakeLists.txt               |  2 +
- test/regression/CMakeLists.txt                |  4 +-
- tpe/lib/CMakeLists.txt                        |  4 +-
- tpe/plugin/CMakeLists.txt                     |  4 +-
- 11 files changed, 115 insertions(+), 10 deletions(-)
- create mode 100644 include/gz/physics/InstallationDirectories.hh
- create mode 100644 src/InstallationDirectories.cc
-
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f7feeffde..da1b2b19c 100644
+index f7feeffde..edde87869 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -37,9 +37,9 @@ message(STATUS "\n\n-- ====== Finding Dependencies ======")
- 
- #--------------------------------------
- # Find gz-common
--gz_find_package(gz-common5
-+gz_find_package(gz-common5 REQUIRED
-   COMPONENTS geospatial graphics profiler
--  REQUIRED_BY heightmap mesh dartsim tpe tpelib bullet)
-+  )
- set(GZ_COMMON_VER ${gz-common5_VERSION_MAJOR})
- 
- #--------------------------------------
 @@ -93,8 +93,11 @@ message(STATUS "-------------------------------------------\n")
  set(GZ_PHYSICS_RESOURCE_DIR "${CMAKE_SOURCE_DIR}/resources")
  
@@ -127,10 +93,10 @@ index 75e9338e2..d0c68462d 100644
  #define GZ_PHYSICS_VERSION_HEADER "Gazebo Physics, version ${PROJECT_VERSION_FULL}\nCopyright (C) 2017 Open Source Robotics Foundation.\nReleased under the Apache 2.0 License.\n\n"
  
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 14f4f830f..9b11c4103 100644
+index 14f4f830f..e3a178297 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -1,9 +1,18 @@
+@@ -1,6 +1,14 @@
  gz_get_libsources_and_unittests(sources gtest_sources)
  gz_create_core_library(SOURCES ${sources} CXX_STANDARD 17)
 +gz_add_get_install_prefix_impl(GET_INSTALL_PREFIX_FUNCTION gz::physics::getInstallPrefix
@@ -145,11 +111,7 @@ index 14f4f830f..9b11c4103 100644
  
  target_link_libraries(${PROJECT_LIBRARY_TARGET_NAME}
    PUBLIC
-+    gz-common${GZ_COMMON_VER}::gz-common${GZ_COMMON_VER}
-     gz-math${GZ_MATH_VER}::gz-math${GZ_MATH_VER}
-     gz-utils${GZ_UTILS_VER}::gz-utils${GZ_UTILS_VER}
-     gz-plugin${GZ_PLUGIN_VER}::register
-@@ -11,7 +20,9 @@ target_link_libraries(${PROJECT_LIBRARY_TARGET_NAME}
+@@ -11,7 +19,9 @@ target_link_libraries(${PROJECT_LIBRARY_TARGET_NAME}
  
  gz_build_tests(
    TYPE UNIT
@@ -162,10 +124,10 @@ index 14f4f830f..9b11c4103 100644
    target_link_libraries(UNIT_FindFeatures_TEST
 diff --git a/src/InstallationDirectories.cc b/src/InstallationDirectories.cc
 new file mode 100644
-index 000000000..5f51c076a
+index 000000000..510f710ac
 --- /dev/null
 +++ b/src/InstallationDirectories.cc
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,151 @@
 +/*
 + * Copyright (C) 2023 Open Source Robotics Foundation
 + *
@@ -183,10 +145,10 @@ index 000000000..5f51c076a
 + *
 +*/
 +
++#include <regex>
++
 +#include <gz/physics/config.hh>
 +#include <gz/physics/InstallationDirectories.hh>
-+
-+#include <gz/common/Filesystem.hh>
 +
 +namespace gz
 +{
@@ -194,141 +156,6 @@ index 000000000..5f51c076a
 +{
 +inline namespace GZ_PHYSICS_VERSION_NAMESPACE {
 +
-+std::string getEngineInstallDir()
-+{
-+  return gz::common::joinPaths(getInstallPrefix(), GZ_PHYSICS_ENGINE_RELATIVE_INSTALL_DIR);
-+}
-+
-+}
-+}
-+}
-diff --git a/test/integration/CMakeLists.txt b/test/integration/CMakeLists.txt
-index a7c565c75..6cf8c9eb6 100644
---- a/test/integration/CMakeLists.txt
-+++ b/test/integration/CMakeLists.txt
-@@ -14,7 +14,9 @@ gz_build_tests(
-     gz-plugin${GZ_PLUGIN_VER}::loader
-   INCLUDE_DIRS
-     ${PROJECT_SOURCE_DIR}/src
--  TEST_LIST list)
-+  TEST_LIST list
-+  ENVIRONMENT
-+    GZ_PHYSICS_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX})
- 
- if (BUILD_TESTING)
-   foreach(test ${list})
-diff --git a/test/performance/CMakeLists.txt b/test/performance/CMakeLists.txt
-index 1034620fa..6a1627d67 100644
---- a/test/performance/CMakeLists.txt
-+++ b/test/performance/CMakeLists.txt
-@@ -12,4 +12,6 @@ gz_build_tests(
-   SOURCES ${tests}
-   INCLUDE_DIRS     
-     ${PROJECT_SOURCE_DIR}/src
-+  ENVIRONMENT
-+    GZ_PHYSICS_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
- )
-diff --git a/test/regression/CMakeLists.txt b/test/regression/CMakeLists.txt
-index f56c54cd5..b7f08a009 100644
---- a/test/regression/CMakeLists.txt
-+++ b/test/regression/CMakeLists.txt
-@@ -2,4 +2,6 @@ gz_get_sources(tests)
- 
- gz_build_tests(
-   TYPE REGRESSION
--  SOURCES ${tests})
-+  SOURCES ${tests}
-+  ENVIRONMENT
-+    GZ_PHYSICS_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX})
-diff --git a/tpe/lib/CMakeLists.txt b/tpe/lib/CMakeLists.txt
-index ef5979fbd..7b18a37f2 100644
---- a/tpe/lib/CMakeLists.txt
-+++ b/tpe/lib/CMakeLists.txt
-@@ -25,4 +25,6 @@ gz_build_tests(
-     ${PROJECT_LIBRARY_TARGET_NAME}-sdf
-     ${PROJECT_LIBRARY_TARGET_NAME}-mesh
-     ${tpelib_target}
--  TEST_LIST tests)
-+  TEST_LIST tests
-+  ENVIRONMENT
-+    GZ_PHYSICS_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX})
-diff --git a/tpe/plugin/CMakeLists.txt b/tpe/plugin/CMakeLists.txt
-index f3075af5b..3d73d6828 100644
---- a/tpe/plugin/CMakeLists.txt
-+++ b/tpe/plugin/CMakeLists.txt
-@@ -59,7 +59,9 @@ gz_build_tests(
-     gz-common${GZ_COMMON_VER}::gz-common${GZ_COMMON_VER}
-     ${PROJECT_LIBRARY_TARGET_NAME}-sdf
-     ${PROJECT_LIBRARY_TARGET_NAME}-mesh
--  TEST_LIST tests)
-+  TEST_LIST tests
-+  ENVIRONMENT
-+    GZ_PHYSICS_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX})
- 
- foreach(test ${tests})
- 
-
-From 2355925437a0df4552090712bddf1d6c9d84a243 Mon Sep 17 00:00:00 2001
-From: Silvio Traversaro <silvio.traversaro@iit.it>
-Date: Mon, 8 May 2023 13:10:05 +0200
-Subject: [PATCH 2/3] Address reviews
-
-Signed-off-by: Silvio Traversaro <silvio.traversaro@iit.it>
----
- CMakeLists.txt                 |   4 +-
- src/CMakeLists.txt             |   1 -
- src/InstallationDirectories.cc | 121 ++++++++++++++++++++++++++++++++-
- 3 files changed, 120 insertions(+), 6 deletions(-)
-
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index da1b2b19c..edde87869 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -37,9 +37,9 @@ message(STATUS "\n\n-- ====== Finding Dependencies ======")
- 
- #--------------------------------------
- # Find gz-common
--gz_find_package(gz-common5 REQUIRED
-+gz_find_package(gz-common5
-   COMPONENTS geospatial graphics profiler
--  )
-+  REQUIRED_BY heightmap mesh dartsim tpe tpelib bullet)
- set(GZ_COMMON_VER ${gz-common5_VERSION_MAJOR})
- 
- #--------------------------------------
-diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 9b11c4103..e3a178297 100644
---- a/src/CMakeLists.txt
-+++ b/src/CMakeLists.txt
-@@ -12,7 +12,6 @@ set_property(
- 
- target_link_libraries(${PROJECT_LIBRARY_TARGET_NAME}
-   PUBLIC
--    gz-common${GZ_COMMON_VER}::gz-common${GZ_COMMON_VER}
-     gz-math${GZ_MATH_VER}::gz-math${GZ_MATH_VER}
-     gz-utils${GZ_UTILS_VER}::gz-utils${GZ_UTILS_VER}
-     gz-plugin${GZ_PLUGIN_VER}::register
-diff --git a/src/InstallationDirectories.cc b/src/InstallationDirectories.cc
-index 5f51c076a..fef091a26 100644
---- a/src/InstallationDirectories.cc
-+++ b/src/InstallationDirectories.cc
-@@ -15,20 +15,135 @@
-  *
- */
- 
-+#include <regex>
-+
- #include <gz/physics/config.hh>
- #include <gz/physics/InstallationDirectories.hh>
- 
--#include <gz/common/Filesystem.hh>
--
- namespace gz
- {
- namespace physics
- {
- inline namespace GZ_PHYSICS_VERSION_NAMESPACE {
- 
 +// We locally import the gz::common::joinPaths function
 +// See https://github.com/gazebosim/gz-physics/pull/507#discussion_r1186919267
 +// for more details
@@ -429,7 +256,7 @@ index 5f51c076a..fef091a26 100644
 +#else  // _WIN32
 +  std::string path1 = sanitizeSlashes(checkWindowsPath(_path1));
 +  std::string path2 = sanitizeSlashes(checkWindowsPath(_path2), true);
-+  std::vector<CHAR> combined(path1.length() + path2.length() + 2);
++  std::vector<char> combined(path1.length() + path2.length() + 2);
 +  if (::PathCombineA(combined.data(), path1.c_str(), path2.c_str()) != NULL)
 +  {
 +    path = sanitizeSlashes(checkWindowsPath(std::string(combined.data())));
@@ -443,12 +270,77 @@ index 5f51c076a..fef091a26 100644
 +}
 +
 +
- std::string getEngineInstallDir()
- {
--  return gz::common::joinPaths(getInstallPrefix(), GZ_PHYSICS_ENGINE_RELATIVE_INSTALL_DIR);
++std::string getEngineInstallDir()
++{
 +  return gz::physics::joinPaths(
 +      getInstallPrefix(), GZ_PHYSICS_ENGINE_RELATIVE_INSTALL_DIR);
- }
++}
++
++}
++}
++}
+diff --git a/test/integration/CMakeLists.txt b/test/integration/CMakeLists.txt
+index a7c565c75..6cf8c9eb6 100644
+--- a/test/integration/CMakeLists.txt
++++ b/test/integration/CMakeLists.txt
+@@ -14,7 +14,9 @@ gz_build_tests(
+     gz-plugin${GZ_PLUGIN_VER}::loader
+   INCLUDE_DIRS
+     ${PROJECT_SOURCE_DIR}/src
+-  TEST_LIST list)
++  TEST_LIST list
++  ENVIRONMENT
++    GZ_PHYSICS_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX})
  
- }
-
+ if (BUILD_TESTING)
+   foreach(test ${list})
+diff --git a/test/performance/CMakeLists.txt b/test/performance/CMakeLists.txt
+index 1034620fa..6a1627d67 100644
+--- a/test/performance/CMakeLists.txt
++++ b/test/performance/CMakeLists.txt
+@@ -12,4 +12,6 @@ gz_build_tests(
+   SOURCES ${tests}
+   INCLUDE_DIRS     
+     ${PROJECT_SOURCE_DIR}/src
++  ENVIRONMENT
++    GZ_PHYSICS_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+ )
+diff --git a/test/regression/CMakeLists.txt b/test/regression/CMakeLists.txt
+index f56c54cd5..b7f08a009 100644
+--- a/test/regression/CMakeLists.txt
++++ b/test/regression/CMakeLists.txt
+@@ -2,4 +2,6 @@ gz_get_sources(tests)
+ 
+ gz_build_tests(
+   TYPE REGRESSION
+-  SOURCES ${tests})
++  SOURCES ${tests}
++  ENVIRONMENT
++    GZ_PHYSICS_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX})
+diff --git a/tpe/lib/CMakeLists.txt b/tpe/lib/CMakeLists.txt
+index ef5979fbd..7b18a37f2 100644
+--- a/tpe/lib/CMakeLists.txt
++++ b/tpe/lib/CMakeLists.txt
+@@ -25,4 +25,6 @@ gz_build_tests(
+     ${PROJECT_LIBRARY_TARGET_NAME}-sdf
+     ${PROJECT_LIBRARY_TARGET_NAME}-mesh
+     ${tpelib_target}
+-  TEST_LIST tests)
++  TEST_LIST tests
++  ENVIRONMENT
++    GZ_PHYSICS_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX})
+diff --git a/tpe/plugin/CMakeLists.txt b/tpe/plugin/CMakeLists.txt
+index f3075af5b..3d73d6828 100644
+--- a/tpe/plugin/CMakeLists.txt
++++ b/tpe/plugin/CMakeLists.txt
+@@ -59,7 +59,9 @@ gz_build_tests(
+     gz-common${GZ_COMMON_VER}::gz-common${GZ_COMMON_VER}
+     ${PROJECT_LIBRARY_TARGET_NAME}-sdf
+     ${PROJECT_LIBRARY_TARGET_NAME}-mesh
+-  TEST_LIST tests)
++  TEST_LIST tests
++  ENVIRONMENT
++    GZ_PHYSICS_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX})
+ 
+ foreach(test ${tests})
+ 
