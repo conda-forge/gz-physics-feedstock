@@ -9,6 +9,7 @@ cmake ^
     -DBUILD_TESTING=ON ^
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON ^
     -DCMAKE_CXX_FLAGS="/permissive- /D_USE_MATH_DEFINES" ^
+    -DGZ_ENABLE_RELOCATABLE_INSTALL:BOOL=ON ^
     %SRC_DIR%
 if errorlevel 1 exit 1
 
