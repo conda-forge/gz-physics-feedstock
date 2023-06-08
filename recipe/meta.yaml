@@ -21,7 +21,7 @@ source:
       - 507.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: {{ cxx_name }}
