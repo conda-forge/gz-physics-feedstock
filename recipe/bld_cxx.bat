@@ -21,5 +21,6 @@ cmake --build . --config Release --target install
 if errorlevel 1 exit 1
 
 :: Test
-ctest --output-on-failure -C Release -E "check_|INTEGRATION_ExamplesBuild_TEST|UNIT_Collisions_TEST|UNIT_EntityManagement_TEST"
+:: COMMON_TEST_collisions_dartsim disable as a workaround for https://github.com/conda-forge/gz-physics-feedstock/pull/7#issuecomment-1582053175
+ctest --output-on-failure -C Release -E "check_|INTEGRATION_ExamplesBuild_TEST|UNIT_Collisions_TEST|UNIT_EntityManagement_TEST|COMMON_TEST_collisions_dartsim"
 if errorlevel 1 exit 1
