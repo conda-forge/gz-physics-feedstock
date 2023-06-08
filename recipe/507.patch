@@ -127,7 +127,7 @@ new file mode 100644
 index 000000000..510f710ac
 --- /dev/null
 +++ b/src/InstallationDirectories.cc
-@@ -0,0 +1,151 @@
+@@ -0,0 +1,155 @@
 +/*
 + * Copyright (C) 2023 Open Source Robotics Foundation
 + *
@@ -149,6 +149,10 @@ index 000000000..510f710ac
 +
 +#include <gz/physics/config.hh>
 +#include <gz/physics/InstallationDirectories.hh>
++
++#ifdef _WIN32
++#include <shlwapi.h>
++#endif
 +
 +namespace gz
 +{
