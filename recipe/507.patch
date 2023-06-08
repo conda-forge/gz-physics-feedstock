@@ -348,3 +348,19 @@ index f3075af5b..3d73d6828 100644
  
  foreach(test ${tests})
  
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index e3a178297..3f57a1355 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -17,6 +17,11 @@ target_link_libraries(${PROJECT_LIBRARY_TARGET_NAME}
+     gz-plugin${GZ_PLUGIN_VER}::register
+     Eigen3::Eigen)
+ 
++if(WIN32)
++  target_link_libraries(${PROJECT_LIBRARY_TARGET_NAME}
++    PRIVATE shlwapi)
++endif()
++
+ gz_build_tests(
+   TYPE UNIT
+   SOURCES ${gtest_sources}
