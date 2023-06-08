@@ -1,11 +1,11 @@
-About gz-physics
-================
+About gz-physics-feedstock
+==========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gz-physics-feedstock/blob/main/LICENSE.txt)
 
 Home: https://github.com/gazebosim/gz-physics
 
 Package license: Apache-2.0
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/gz-physics-feedstock/blob/main/LICENSE.txt)
 
 Summary: Abstract physics interface designed to support simulation and rapid development of robot applications. 
 

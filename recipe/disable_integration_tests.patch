@@ -1,11 +1,11 @@
 diff --git a/test/CMakeLists.txt b/test/CMakeLists.txt
-index ed0e7942..9f350a0d 100644
+index 5e1e3e0e..f6635408 100644
 --- a/test/CMakeLists.txt
 +++ b/test/CMakeLists.txt
-@@ -24,7 +24,7 @@ add_subdirectory(benchmark)
+@@ -23,7 +23,7 @@ add_subdirectory(gtest_vendor)
+ add_subdirectory(benchmark)
  add_subdirectory(common_test)
  add_subdirectory(plugins)
- add_subdirectory(helpers)
 -add_subdirectory(integration)
 +#add_subdirectory(integration)
  add_subdirectory(performance)
