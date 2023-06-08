@@ -11,7 +11,7 @@ cd build
 cmake ${CMAKE_ARGS} .. \
       -G "Ninja" \
       -DCMAKE_BUILD_TYPE=Release \
-      -DCMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP=True ^
+      -DCMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP=True \
       -DGZ_ENABLE_RELOCATABLE_INSTALL:BOOL=ON
 
 cmake --build . --config Release ${NUM_PARALLEL}
