@@ -18,7 +18,6 @@ source:
       - disable_fake_install.patch
       - disable_integration_tests.patch  # [win]
       - workaround_win_base_test.patch  # [win]
-      - 507.patch
 
 build:
   number: 0
