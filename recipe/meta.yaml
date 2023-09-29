@@ -1,6 +1,6 @@
 {% set component_name = "physics" %}
 {% set repo_name = "gz-" + component_name %}
-{% set version = "6_6.5.0" %}
+{% set version = "6_6.5.1" %}
 {% set major_version = version.split('_')[0] %}
 {% set version_package = version.split('_')[1] %}
 {% set name = repo_name + major_version %}
@@ -13,7 +13,7 @@ package:
 
 source:
   - url: https://github.com/gazebosim/{{ repo_name }}/archive/{{ repo_name }}{{ version }}.tar.gz
-    sha256: f20040fa7c37940e64c42219240d880bb51cb2e4a1f7b8d73927753f4b51251a
+    sha256: 4c8f7aef073124817bc54bb9427f6ba72c5b0d5e177e62e95f1dc18fd611d05a
     patches:
       - disable_fake_install.patch
       - disable_integration_tests.patch  # [win]
