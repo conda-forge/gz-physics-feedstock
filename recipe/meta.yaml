@@ -42,7 +42,7 @@ outputs:
         - libgz-math7
         - libgz-common5
         - libgz-utils2
-        - libsdformat13
+        - libsdformat14
         - eigen
         - assimp
         - dartsim
