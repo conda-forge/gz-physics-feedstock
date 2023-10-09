@@ -22,7 +22,8 @@ if [ ${target_platform} != "linux-ppc64le" ]; then
   # Remove test that fail on macOS: https://github.com/conda-forge/libignition-physics-feedstock/issues/13, https://github.com/conda-forge/gz-physics-feedstock/issues/9
   # Remove test INTEGRATION_ExamplesBuild_TEST that fails on multiple platforms: https://github.com/conda-forge/libignition-physics-feedstock/pull/14
   # Remove COMMON_TEST_simulation_features_dartsim that fails on aarch64 https://github.com/conda-forge/gz-physics-feedstock/issues/15
+  # Remove COMMON_TEST_joint_mimic_features_bullet-featherstone due to https://github.com/conda-forge/gz-physics-feedstock/pull/16#issuecomment-1753235252
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
-  ctest --output-on-failure -C Release -E "INTEGRATION_FrameSemantics2d|INTEGRATION_JointTypes2f|UNIT_Collisions_TEST|UNIT_EntityManagement_TEST|UNIT_JointFeatures_TEST|UNIT_LinkFeatures_TEST|UNIT_SDFFeatures_TEST|UNIT_SimulationFeatures_TEST|INTEGRATION_ExamplesBuild_TEST|UNIT_WorldFeatures_TEST|UNIT_ShapeFeatures_TEST|UNIT_FreeGroupFeatures_TEST|UNIT_KinematicsFeatures_TEST|PERFORMANCE|UNIT_AddedMassFeatures_TEST|COMMON_TEST_simulation_features_dartsim"
+  ctest --output-on-failure -C Release -E "INTEGRATION_FrameSemantics2d|INTEGRATION_JointTypes2f|UNIT_Collisions_TEST|UNIT_EntityManagement_TEST|UNIT_JointFeatures_TEST|UNIT_LinkFeatures_TEST|UNIT_SDFFeatures_TEST|UNIT_SimulationFeatures_TEST|INTEGRATION_ExamplesBuild_TEST|UNIT_WorldFeatures_TEST|UNIT_ShapeFeatures_TEST|UNIT_FreeGroupFeatures_TEST|UNIT_KinematicsFeatures_TEST|PERFORMANCE|UNIT_AddedMassFeatures_TEST|COMMON_TEST_simulation_features_dartsim|COMMON_TEST_joint_mimic_features_bullet-featherstone"
 fi
 fi
