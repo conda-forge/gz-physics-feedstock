@@ -1,6 +1,6 @@
 {% set component_name = "physics" %}
 {% set repo_name = "gz-" + component_name %}
-{% set version = "6_6.5.1" %}
+{% set version = "7_7.0.0" %}
 {% set major_version = version.split('_')[0] %}
 {% set version_package = version.split('_')[1] %}
 {% set name = repo_name + major_version %}
@@ -13,7 +13,7 @@ package:
 
 source:
   - url: https://github.com/gazebosim/{{ repo_name }}/archive/{{ repo_name }}{{ version }}.tar.gz
-    sha256: 4c8f7aef073124817bc54bb9427f6ba72c5b0d5e177e62e95f1dc18fd611d05a
+    sha256: d352b68bec5d2e28cb20237d2cb68917e4acfe122e6df0dc059ed436d65fd270
     patches:
       - disable_fake_install.patch
       - disable_integration_tests.patch  # [win]
@@ -42,7 +42,7 @@ outputs:
         - libgz-math7
         - libgz-common5
         - libgz-utils2
-        - libsdformat13
+        - libsdformat14
         - eigen
         - assimp
         - dartsim

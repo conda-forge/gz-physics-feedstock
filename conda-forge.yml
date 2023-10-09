@@ -1,3 +1,7 @@
+bot:
+  abi_migration_branches:
+  - 'v6'
+  automerge: true
 azure:
   settings_win:
     pool:
