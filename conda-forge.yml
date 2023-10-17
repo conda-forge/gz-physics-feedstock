@@ -1,11 +1,11 @@
-bot:
-  abi_migration_branches:
-  - 'v6'
-  automerge: true
 azure:
   settings_win:
     pool:
       vmImage: windows-2022
+bot:
+  abi_migration_branches:
+  - v6
+  automerge: true
 build_platform:
   osx_arm64: osx_64
 conda_build:
