@@ -20,7 +20,7 @@ source:
       - workaround_win_base_test.patch  # [win]
 
 build:
-  number: 2
+  number: 3
 
 outputs:
   - name: {{ cxx_name }}
@@ -33,6 +33,7 @@ outputs:
       build:
         - {{ compiler('cxx') }}
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - ninja
         - cmake
         - pkg-config
