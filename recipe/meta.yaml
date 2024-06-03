@@ -20,7 +20,7 @@ source:
       - workaround_win_base_test.patch  # [win]
 
 build:
-  number: 2
+  number: 3
   # gz-physics requires gz-common's geospatial component, that requires
   # gdal that is not available on ppc64le https://github.com/conda-forge/gdal-feedstock/issues/918
   skip: true  # [ppc64le]
@@ -36,6 +36,7 @@ outputs:
       build:
         - {{ compiler('cxx') }}
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - ninja
         - cmake
         - pkg-config
