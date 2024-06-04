@@ -1,14 +1,18 @@
 assimp:
-- 5.3.1
+- 5.4.1
 bullet_cpp:
 - '3.25'
 c_compiler:
 - vs2019
+c_stdlib:
+- vs
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
 - vs2019
+libode:
+- 0.16.2
 target_platform:
 - win-64
