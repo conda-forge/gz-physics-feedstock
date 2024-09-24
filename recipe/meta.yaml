@@ -1,6 +1,6 @@
 {% set component_name = "physics" %}
 {% set repo_name = "gz-" + component_name %}
-{% set version = "7.2.0" %}
+{% set version = "7.3.0" %}
 {% set major_version = version.split('.')[0] %}
 {% set name = repo_name + major_version %}
 {% set component_version = component_name + major_version %}
@@ -19,7 +19,7 @@ source:
       - workaround_win_base_test.patch  # [win]
 
 build:
-  number: 7
+  number: 0
 
 outputs:
   - name: {{ cxx_name }}
