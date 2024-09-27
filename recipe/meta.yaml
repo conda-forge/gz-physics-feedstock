@@ -37,12 +37,12 @@ outputs:
         - cmake
         - pkg-config
       host:
-        - libgz-cmake3
-        - libgz-plugin2
-        - libgz-math7
-        - libgz-common5
+        - libgz-cmake4
+        - libgz-plugin3
+        - libgz-math8
+        - libgz-common6
         - libgz-utils2
-        - libsdformat14
+        - libsdformat15
         - eigen
         - assimp
         - dartsim-cpp
