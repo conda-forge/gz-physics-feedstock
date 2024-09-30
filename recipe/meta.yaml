@@ -17,6 +17,7 @@ source:
       - disable_fake_install.patch
       - disable_integration_tests.patch  # [win]
       - workaround_win_base_test.patch  # [win]
+      - disable_common_test.patch  # [arm64]
 
 build:
   number: 0
