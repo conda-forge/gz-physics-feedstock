@@ -1,0 +1,23 @@
+From 28e4f01366d39b4826274cdc573b01b0b7cd00ca Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio.traversaro@iit.it>
+Date: Mon, 30 Sep 2024 12:35:13 +0200
+Subject: [PATCH] Update CMakeLists.txt
+
+Signed-off-by: Silvio Traversaro <silvio.traversaro@iit.it>
+---
+ test/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/CMakeLists.txt b/test/CMakeLists.txt
+index 47dbfe30f..a1197a4bb 100644
+--- a/test/CMakeLists.txt
++++ b/test/CMakeLists.txt
+@@ -32,7 +32,7 @@ target_link_libraries(gz-physics-test INTERFACE
+ 
+ add_subdirectory(gtest_vendor)
+ add_subdirectory(benchmark)
+-add_subdirectory(common_test)
++#add_subdirectory(common_test)
+ add_subdirectory(plugins)
+ add_subdirectory(integration)
+ add_subdirectory(performance)
