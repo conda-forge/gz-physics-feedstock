@@ -1,6 +1,6 @@
 {% set component_name = "physics" %}
 {% set repo_name = "gz-" + component_name %}
-{% set version = "7.3.0" %}
+{% set version = "8.0.0" %}
 {% set major_version = version.split('.')[0] %}
 {% set name = repo_name + major_version %}
 {% set component_version = component_name + major_version %}
@@ -12,11 +12,12 @@ package:
 
 source:
   - url: https://github.com/gazebosim/{{ repo_name }}/archive/{{ repo_name }}{{ major_version }}_{{ version }}.tar.gz
-    sha256: 4da34f55ba8a45b56b91f47803e7166edd6555eff7924b50763d87736475846b
+    sha256: 58ecf05966c901ff09d378e2ab151de40bc0a5e6a46fe25989730ce13c5cbf56
     patches:
       - disable_fake_install.patch
       - disable_integration_tests.patch  # [win]
       - workaround_win_base_test.patch  # [win]
+      - disable_common_test.patch  # [arm64]
 
 build:
   number: 2
@@ -37,12 +38,12 @@ outputs:
         - cmake
         - pkg-config
       host:
-        - libgz-cmake3
-        - libgz-plugin2
-        - libgz-math7
-        - libgz-common5
+        - libgz-cmake4
+        - libgz-plugin3
+        - libgz-math8
+        - libgz-common6
         - libgz-utils2
-        - libsdformat14
+        - libsdformat15
         - eigen
         - assimp
         - dartsim-cpp

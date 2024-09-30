@@ -81,8 +81,8 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-gz--physics7-green.svg)](https://anaconda.org/conda-forge/gz-physics7) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gz-physics7.svg)](https://anaconda.org/conda-forge/gz-physics7) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gz-physics7.svg)](https://anaconda.org/conda-forge/gz-physics7) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gz-physics7.svg)](https://anaconda.org/conda-forge/gz-physics7) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-libgz--physics7-green.svg)](https://anaconda.org/conda-forge/libgz-physics7) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libgz-physics7.svg)](https://anaconda.org/conda-forge/libgz-physics7) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libgz-physics7.svg)](https://anaconda.org/conda-forge/libgz-physics7) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libgz-physics7.svg)](https://anaconda.org/conda-forge/libgz-physics7) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-gz--physics8-green.svg)](https://anaconda.org/conda-forge/gz-physics8) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/gz-physics8.svg)](https://anaconda.org/conda-forge/gz-physics8) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/gz-physics8.svg)](https://anaconda.org/conda-forge/gz-physics8) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/gz-physics8.svg)](https://anaconda.org/conda-forge/gz-physics8) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libgz--physics8-green.svg)](https://anaconda.org/conda-forge/libgz-physics8) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libgz-physics8.svg)](https://anaconda.org/conda-forge/libgz-physics8) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libgz-physics8.svg)](https://anaconda.org/conda-forge/libgz-physics8) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libgz-physics8.svg)](https://anaconda.org/conda-forge/libgz-physics8) |
 
 Installing gz-physics
 =====================
@@ -94,41 +94,41 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `gz-physics7, libgz-physics7` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `gz-physics8, libgz-physics8` can be installed with `conda`:
 
 ```
-conda install gz-physics7 libgz-physics7
-```
-
-or with `mamba`:
-
-```
-mamba install gz-physics7 libgz-physics7
-```
-
-It is possible to list all of the versions of `gz-physics7` available on your platform with `conda`:
-
-```
-conda search gz-physics7 --channel conda-forge
+conda install gz-physics8 libgz-physics8
 ```
 
 or with `mamba`:
 
 ```
-mamba search gz-physics7 --channel conda-forge
+mamba install gz-physics8 libgz-physics8
+```
+
+It is possible to list all of the versions of `gz-physics8` available on your platform with `conda`:
+
+```
+conda search gz-physics8 --channel conda-forge
+```
+
+or with `mamba`:
+
+```
+mamba search gz-physics8 --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search gz-physics7 --channel conda-forge
+mamba repoquery search gz-physics8 --channel conda-forge
 
-# List packages depending on `gz-physics7`:
-mamba repoquery whoneeds gz-physics7 --channel conda-forge
+# List packages depending on `gz-physics8`:
+mamba repoquery whoneeds gz-physics8 --channel conda-forge
 
-# List dependencies of `gz-physics7`:
-mamba repoquery depends gz-physics7 --channel conda-forge
+# List dependencies of `gz-physics8`:
+mamba repoquery depends gz-physics8 --channel conda-forge
 ```
 
 
