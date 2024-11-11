@@ -13,6 +13,6 @@ channel_targets:
 cxx_compiler:
 - vs2019
 libode:
-- 0.16.2
+- 0.16.5
 target_platform:
 - win-64
