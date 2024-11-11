@@ -49,6 +49,7 @@ outputs:
         - dartsim
         - libode
         - bullet-cpp
+        - libboost-devel
 
     test:
       commands:
