@@ -20,7 +20,7 @@ source:
       - workaround_win_base_test.patch  # [win]
 
 build:
-  number: 7
+  number: 8
 
 outputs:
   - name: {{ cxx_name }}
