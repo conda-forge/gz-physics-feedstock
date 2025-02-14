@@ -22,6 +22,8 @@ cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '18'
+dartsim_cpp:
+- '6.15'
 libode:
 - 0.16.5
 macos_machine:
