@@ -1,14 +1,11 @@
-azure:
-  settings_win:
-    pool:
-      vmImage: windows-2022
 bot:
   abi_migration_branches:
-  - v6
   - v7
   automerge: true
 build_platform:
   osx_arm64: osx_64
+  linux_aarch64: linux_64
+  linux_ppc64le: linux_64
 conda_build:
   pkg_format: '2'
 conda_forge_output_validation: true
