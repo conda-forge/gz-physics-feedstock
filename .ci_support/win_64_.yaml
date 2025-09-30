@@ -3,7 +3,7 @@ assimp:
 bullet_cpp:
 - '3.25'
 c_compiler:
-- vs2019
+- vs2022
 c_stdlib:
 - vs
 channel_sources:
@@ -11,7 +11,9 @@ channel_sources:
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- vs2019
+- vs2022
+dartsim_cpp:
+- '6.15'
 libode:
 - 0.16.5
 target_platform:
