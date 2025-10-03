@@ -61,23 +61,18 @@ outputs:
       run_exports:
         - ${{ pin_subpackage(cxx_name, upper_bound='x') }}
     tests:
+      - package_contents:
+          include:
+            - gz/${{ component_name }}/gz/${{ component_name }}.hh
+          lib:
+            - gz-${{ component_name }}
       - script:
-          - if: not win
-            then:
-              - test -f ${PREFIX}/include/gz/${{ component_version }}/gz/${{ component_name }}.hh
-              - test -f ${PREFIX}/lib/cmake/${{ name }}/${{ name }}-config.cmake
-          - if: linux
-            then:
-              - test -f ${PREFIX}/lib/lib${{ name }}.so
-          - if: osx
-            then:
-              - test -f ${PREFIX}/lib/lib${{ name }}.dylib
-          - if: win
-            then:
-              - if not exist %PREFIX%\\Library\\include\\gz\\${{ component_version }}\\gz\\${{ component_name }}.hh exit 1
-              - if not exist %PREFIX%\\Library\\lib\\${{ name }}.lib exit 1
-              - if not exist %PREFIX%\\Library\\bin\\${{ name }}.dll exit 1
-              - if not exist %PREFIX%\\Library\\lib\\cmake\\${{ name }}\\${{ name }}-config.cmake exit 1
+          - cmake-package-check gz-${{ component_name }} --targets gz-${{ component_name }}::gz-${{ component_name }}
+        requirements:
+          run:
+            - cmake-package-check
+            - ${{ compiler('c') }}
+            - ${{ compiler('cxx') }}
 
   - package:
       name: ${{ name }}
@@ -88,22 +83,12 @@ outputs:
         - ${{ pin_subpackage(cxx_name, upper_bound='x') }}
     tests:
       - script:
-          - if: not win
-            then:
-              - test -f ${PREFIX}/include/gz/${{ component_version }}/gz/${{ component_name }}.hh
-              - test -f ${PREFIX}/lib/cmake/${{ name }}/${{ name }}-config.cmake
-          - if: linux
-            then:
-              - test -f ${PREFIX}/lib/lib${{ name }}.so
-          - if: osx
-            then:
-              - test -f ${PREFIX}/lib/lib${{ name }}.dylib
-          - if: win
-            then:
-              - if not exist %PREFIX%\\Library\\include\\gz\\${{ component_version }}\\gz\\${{ component_name }}.hh exit 1
-              - if not exist %PREFIX%\\Library\\lib\\${{ name }}.lib exit 1
-              - if not exist %PREFIX%\\Library\\bin\\${{ name }}.dll exit 1
-              - if not exist %PREFIX%\\Library\\lib\\cmake\\${{ name }}\\${{ name }}-config.cmake exit 1
+          - cmake-package-check gz-${{ component_name }} --targets gz-${{ component_name }}::gz-${{ component_name }}
+        requirements:
+          run:
+            - cmake-package-check
+            - ${{ compiler('c') }}
+            - ${{ compiler('cxx') }}
 
 about:
   homepage: https://github.com/gazebosim/${{ repo_name }}
