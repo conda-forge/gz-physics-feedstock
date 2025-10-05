@@ -63,7 +63,7 @@ outputs:
     tests:
       - package_contents:
           include:
-            - gz/${{ component_name }}/gz/${{ component_name }}.hh
+            - gz/${{ component_version }}/gz/${{ component_name }}.hh
           lib:
             - gz-${{ component_name }}
       - script:
