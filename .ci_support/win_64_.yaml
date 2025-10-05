@@ -14,7 +14,19 @@ cxx_compiler:
 - vs2022
 dartsim_cpp:
 - '6.15'
+libgz_cmake:
+- '5'
+libgz_common:
+- '7'
+libgz_math:
+- '9'
+libgz_plugin:
+- '4'
+libgz_utils:
+- '4'
 libode:
 - 0.16.5
+libsdformat:
+- '16'
 target_platform:
 - win-64

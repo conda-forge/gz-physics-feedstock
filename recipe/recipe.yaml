@@ -1,0 +1,103 @@
+schema_version: 1
+
+context:
+  component_name: physics
+  repo_name: ${{ "gz-" + component_name }}
+  version: 9.0.0
+  major_version: "9"
+  name: ${{ repo_name }}
+  component_version: ${{ component_name + major_version }}
+  cxx_name: ${{ "lib" + name }}
+
+recipe:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  - url: https://github.com/gazebosim/${{ repo_name }}/archive/${{ repo_name }}${{ major_version }}_${{ version }}.tar.gz
+    sha256: d2e6e8caefec88d2c6e7cf60dc404a2761a11b36299cbb9f6e72571f78495b0e
+    patches:
+      - disable_fake_install.patch
+      - if: win
+        then:
+          - disable_integration_tests.patch
+          - workaround_win_base_test.patch
+      - if: arm64
+        then:
+          - disable_common_test.patch
+
+build:
+  number: 0
+
+outputs:
+  - package:
+      name: ${{ cxx_name }}
+    build:
+      script:
+        - if: unix
+          then: build_cxx.sh
+        - if: win
+          then: bld_cxx.bat
+    requirements:
+      build:
+        - ${{ compiler('cxx') }}
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - ninja
+        - cmake
+        - pkg-config
+      host:
+        - libgz-cmake
+        - libgz-plugin
+        - libgz-math
+        - libgz-common
+        - libgz-utils
+        - libsdformat
+        - eigen
+        - assimp
+        - dartsim-cpp
+        - libode
+        - bullet-cpp
+      run_exports:
+        - ${{ pin_subpackage(cxx_name, upper_bound='x') }}
+    tests:
+      - package_contents:
+          include:
+            - gz/${{ component_version }}/gz/${{ component_name }}.hh
+          lib:
+            - gz-${{ component_name }}
+      - script:
+          - cmake-package-check gz-${{ component_name }} --targets gz-${{ component_name }}::gz-${{ component_name }}
+        requirements:
+          run:
+            - cmake-package-check
+            - ${{ compiler('c') }}
+            - ${{ compiler('cxx') }}
+
+  - package:
+      name: ${{ name }}
+    requirements:
+      run:
+        - ${{ pin_subpackage(cxx_name, exact=True) }}
+      run_exports:
+        - ${{ pin_subpackage(cxx_name, upper_bound='x') }}
+    tests:
+      - script:
+          - cmake-package-check gz-${{ component_name }} --targets gz-${{ component_name }}::gz-${{ component_name }}
+        requirements:
+          run:
+            - cmake-package-check
+            - ${{ compiler('c') }}
+            - ${{ compiler('cxx') }}
+
+about:
+  homepage: https://github.com/gazebosim/${{ repo_name }}
+  license: Apache-2.0
+  license_file: LICENSE
+  summary: Abstract physics interface designed to support simulation and rapid development of robot applications.
+
+extra:
+  feedstock-name: ${{ repo_name }}
+  recipe-maintainers:
+    - Tobias-Fischer
+    - traversaro
