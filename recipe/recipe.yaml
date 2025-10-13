@@ -2,12 +2,12 @@ schema_version: 1
 
 context:
   component_name: physics
-  repo_name: ${{ "gz-" + component_name }}
+  repo_name: ${{ "gz-" ~ component_name }}
   version: 7.5.0
   major_version: "7"
-  name: ${{ repo_name + major_version }}
-  component_version: ${{ component_name + major_version }}
-  cxx_name: ${{ "lib" + name }}
+  name: ${{ repo_name ~ major_version }}
+  component_version: ${{ component_name ~ major_version }}
+  cxx_name: ${{ "lib" ~ name }}
 
 recipe:
   name: ${{ name }}
