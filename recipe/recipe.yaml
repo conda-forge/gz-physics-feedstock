@@ -24,7 +24,7 @@ source:
           - workaround_win_base_test.patch
 
 build:
-  number: 1
+  number: 2
 
 outputs:
   - package:
