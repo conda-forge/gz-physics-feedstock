@@ -23,7 +23,7 @@ dartsim_cpp:
 docker_image:
 - quay.io/condaforge/linux-anvil-x86_64:alma9
 libode:
-- 0.16.5
+- 0.16.6
 target_platform:
 - linux-ppc64le
 zip_keys:
