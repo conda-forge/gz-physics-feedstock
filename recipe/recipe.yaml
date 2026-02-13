@@ -27,7 +27,7 @@ source:
           - disable_common_test.patch
 
 build:
-  number: 3
+  number: 4
 
 outputs:
   - package:
