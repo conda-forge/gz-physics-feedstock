@@ -53,6 +53,7 @@ outputs:
         - eigen
         - assimp
         - dartsim-cpp
+        - eigen-abi-devel
         - libode
         - bullet-cpp
       run_exports:
