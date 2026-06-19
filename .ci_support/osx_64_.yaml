@@ -24,6 +24,8 @@ cxx_compiler_version:
 - '19'
 dartsim_cpp:
 - '6.19'
+eigen_abi_devel:
+- 5.0.1
 libode:
 - 0.16.6
 macos_machine:

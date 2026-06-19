@@ -22,6 +22,8 @@ dartsim_cpp:
 - '6.19'
 docker_image:
 - quay.io/condaforge/linux-anvil-aarch64:alma9
+eigen_abi_devel:
+- 5.0.1
 libode:
 - 0.16.6
 target_platform:
