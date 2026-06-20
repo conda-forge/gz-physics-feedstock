@@ -1,0 +1,28 @@
+diff --git a/test/CMakeLists.txt b/test/CMakeLists.txt
+index 5e1e3e0e..73d4bb82 100644
+--- a/test/CMakeLists.txt
++++ b/test/CMakeLists.txt
+@@ -20,7 +20,7 @@ ExternalProject_Add(
+     "-DCMAKE_INSTALL_PREFIX=${FAKE_INSTALL_PREFIX}"
+ )
+ 
+-add_subdirectory(gtest_vendor)
++find_package(GTest REQUIRED)
+ add_subdirectory(benchmark)
+ add_subdirectory(common_test)
+ add_subdirectory(plugins)
+diff --git a/test/common_test/CMakeLists.txt b/test/common_test/CMakeLists.txt
+index 80958519..66070a69 100644
+--- a/test/common_test/CMakeLists.txt
++++ b/test/common_test/CMakeLists.txt
+@@ -60,8 +60,8 @@ foreach(test ${tests})
+       ${PROJECT_LIBRARY_TARGET_NAME}
+       ${PROJECT_LIBRARY_TARGET_NAME}-sdf
+       ${PROJECT_LIBRARY_TARGET_NAME}-mesh
+-      gtest
+-      gtest_main
++      GTest::gtest
++      GTest::gtest_main
+   )
+ 
+   target_include_directories(${test_executable} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

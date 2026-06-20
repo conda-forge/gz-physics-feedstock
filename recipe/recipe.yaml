@@ -18,6 +18,7 @@ source:
     sha256: 0394019f2b1f25ab28fb2a54aa5a7f271f7607c00bc24489e99ffa92399818d9
     patches:
       - disable_fake_install.patch
+      - use_system_gtest.patch
       - if: win
         then:
           - disable_integration_tests.patch
@@ -54,6 +55,7 @@ outputs:
         - assimp
         - dartsim-cpp
         - eigen-abi-devel
+        - gtest
         - libode
         - bullet-cpp
       run_exports:
