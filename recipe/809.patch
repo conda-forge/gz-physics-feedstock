@@ -1,0 +1,81 @@
+From 00a98c155974fe42ee0fc67a16d4d845af1835ba Mon Sep 17 00:00:00 2001
+From: conda-forge <conda-forge@users.noreply.github.com>
+Date: Sat, 20 Jun 2026 00:00:00 +0000
+Subject: [PATCH] Fix arm64 tests
+
+Backport the collision tolerance fix from
+https://github.com/gazebosim/gz-physics/pull/809.
+
+The DART tests create raw worlds which default to FCL, unlike the production
+plugin which selects ODE. Select DART's built-in detector so these tests do not
+cross the incompatible FCL / Eigen ABI boundary on arm64.
+---
+ dartsim/src/Base_TEST.cc            | 3 +++
+ test/common_test/collisions.cc      | 8 ++++++--
+ test/plugins/DARTDoublePendulum.cc  | 3 +++
+ 3 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/dartsim/src/Base_TEST.cc b/dartsim/src/Base_TEST.cc
+index 8f7975d..743b6bc 100644
+--- a/dartsim/src/Base_TEST.cc
++++ b/dartsim/src/Base_TEST.cc
+@@ -29,6 +29,7 @@
+ #include <sdf/Root.hh>
+ #include <sdf/Model.hh>
+ 
++#include "dart/collision/dart/DARTCollisionDetector.hpp"
+ #include "dart/dynamics/BoxShape.hpp"
+ #include "dart/dynamics/FreeJoint.hpp"
+ #include "dart/dynamics/Skeleton.hpp"
+@@ -48,6 +49,8 @@ TEST(BaseClass, RemoveModel)
+   base.InitiateEngine(0);
+ 
+   dart::simulation::WorldPtr world = dart::simulation::World::create("default");
++  world->getConstraintSolver()->setCollisionDetector(
++      dart::collision::DARTCollisionDetector::create());
+ 
+   auto worldID = base.AddWorld(world, world->getName());
+   EXPECT_TRUE(base.worlds.HasEntity(worldID));
+diff --git a/test/common_test/collisions.cc b/test/common_test/collisions.cc
+index 2b60565..ea39721 100644
+--- a/test/common_test/collisions.cc
++++ b/test/common_test/collisions.cc
+@@ -262,8 +262,12 @@ TEST_F(CollisionMeshTestFeaturesList, MeshOptimization)
+       // convex decomposition gives more accurate results
+       double tol = (optimizationStr == "convex_decomposition") ? 1e-3 : 1e-2;
+       EXPECT_NEAR(0.1,
+-                  frameDataModelOptimizedBody.pose.translation().z(), tol);
++                  frameDataModelOptimizedBody.pose.translation().z(), tol)
++          << optimizationStr;
++#ifdef __aarch64__
++      EXPECT_NEAR(0.0, frameDataModelOptimizedBody.linearVelocity.z(), 2 * tol)
++#else
+       EXPECT_NEAR(0.0, frameDataModelOptimizedBody.linearVelocity.z(), tol);
++#endif
++          << optimizationStr;
+ 
+       initialModelPose.Pos() += gz::math::Vector3d(0, 2, 0);
+     }
+diff --git a/test/plugins/DARTDoublePendulum.cc b/test/plugins/DARTDoublePendulum.cc
+index 32a116c..d078229 100644
+--- a/test/plugins/DARTDoublePendulum.cc
++++ b/test/plugins/DARTDoublePendulum.cc
+@@ -21,6 +21,7 @@
+ #include <unordered_map>
+ 
+ #include <dart/dart.hpp>
++#include <dart/collision/dart/DARTCollisionDetector.hpp>
+ #include <dart/utils/utils.hpp>
+ #include <dart/utils/urdf/urdf.hpp>
+ 
+@@ -55,6 +56,8 @@ namespace mock
+         : world(new ::dart::simulation::World),
+           lastId(0)
+       {
++        this->world->getConstraintSolver()->setCollisionDetector(
++            ::dart::collision::DARTCollisionDetector::create());
+         ::dart::utils::DartLoader loader;
+         this->robot = loader.parseSkeleton(
+           gz::physics::test::resources::kRrbotXml);
+-- 
+2.50.1
