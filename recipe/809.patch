@@ -11,9 +11,9 @@ plugin which selects ODE. Select DART's built-in detector so these tests do not
 cross the incompatible FCL / Eigen ABI boundary on arm64.
 ---
  dartsim/src/Base_TEST.cc            | 3 +++
- test/common_test/collisions.cc      | 8 ++++++--
+ test/common_test/collisions.cc      | 10 ++++++++--
  test/plugins/DARTDoublePendulum.cc  | 3 +++
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/dartsim/src/Base_TEST.cc b/dartsim/src/Base_TEST.cc
 index 8f7975d..743b6bc 100644
@@ -40,7 +40,7 @@ diff --git a/test/common_test/collisions.cc b/test/common_test/collisions.cc
 index 2b60565..ea39721 100644
 --- a/test/common_test/collisions.cc
 +++ b/test/common_test/collisions.cc
-@@ -262,8 +262,12 @@ TEST_F(CollisionMeshTestFeaturesList, MeshOptimization)
+@@ -262,8 +262,14 @@ TEST_F(CollisionMeshTestFeaturesList, MeshOptimization)
        // convex decomposition gives more accurate results
        double tol = (optimizationStr == "convex_decomposition") ? 1e-3 : 1e-2;
        EXPECT_NEAR(0.1,
@@ -50,7 +50,8 @@ index 2b60565..ea39721 100644
 +#ifdef __aarch64__
 +      EXPECT_NEAR(0.0, frameDataModelOptimizedBody.linearVelocity.z(), 2 * tol)
 +#else
-       EXPECT_NEAR(0.0, frameDataModelOptimizedBody.linearVelocity.z(), tol);
+-      EXPECT_NEAR(0.0, frameDataModelOptimizedBody.linearVelocity.z(), tol);
++      EXPECT_NEAR(0.0, frameDataModelOptimizedBody.linearVelocity.z(), tol)
 +#endif
 +          << optimizationStr;
  
