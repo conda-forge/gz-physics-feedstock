@@ -1,6 +1,6 @@
 --- a/test/CMakeLists.txt	2021-06-14 08:29:09.563903942 +1000
 +++ b/test/CMakeLists.txt	2021-06-14 08:27:09.987901000 +1000
-@@ -26,23 +26,23 @@
+@@ -26,24 +26,24 @@
  #============================================================================
  # Do a fake install of ign-physics in order to test the examples.
  #============================================================================
@@ -25,6 +25,7 @@
 -  CMAKE_ARGS
 -    "-DBUILD_TESTING=OFF"
 -    "-DCMAKE_INSTALL_PREFIX=${FAKE_INSTALL_PREFIX}"
+-    "-DCMAKE_PREFIX_PATH=${CMAKE_INSTALL_PREFIX}"
 -)
 +#   SOURCE_DIR "${CMAKE_SOURCE_DIR}"
 +#   EXCLUDE_FROM_ALL 1
@@ -34,6 +35,7 @@
 +#   CMAKE_ARGS
 +#     "-DBUILD_TESTING=OFF"
 +#     "-DCMAKE_INSTALL_PREFIX=${FAKE_INSTALL_PREFIX}"
++#     "-DCMAKE_PREFIX_PATH=${CMAKE_INSTALL_PREFIX}"
 +# )
  
  add_subdirectory(benchmark)
