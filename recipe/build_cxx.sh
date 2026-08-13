@@ -8,16 +8,23 @@ fi
 mkdir build
 cd build
 
+if [[ "${target_platform}" == "linux-aarch64" ]]; then
+    # Work around a reproducible GCC 14.4 internal compiler error while compiling
+    # the GTest-based test executables.
+    TESTING_ARGS="-DBUILD_TESTING=OFF"
+fi
+
 cmake ${CMAKE_ARGS} .. \
       -G "Ninja" \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP=True \
-      -DGZ_ENABLE_RELOCATABLE_INSTALL:BOOL=ON
+      -DGZ_ENABLE_RELOCATABLE_INSTALL:BOOL=ON \
+      ${TESTING_ARGS}
 
 cmake --build . --config Release ${NUM_PARALLEL}
 cmake --build . --config Release --target install ${NUM_PARALLEL}
 
-if [ ${target_platform} != "linux-ppc64le" ]; then
+if [[ "${target_platform}" != "linux-ppc64le" && "${target_platform}" != "linux-aarch64" ]]; then
   # Remove test that fail on arm64: https://github.com/ignitionrobotics/ign-physics/issues/70
   # Remove test that fail on macOS: https://github.com/conda-forge/libignition-physics-feedstock/issues/13, https://github.com/conda-forge/gz-physics-feedstock/issues/9
   # Remove test INTEGRATION_ExamplesBuild_TEST that fails on multiple platforms: https://github.com/conda-forge/libignition-physics-feedstock/pull/14
