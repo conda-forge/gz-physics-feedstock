@@ -26,7 +26,7 @@ source:
           - workaround_win_base_test.patch
 
 build:
-  number: 6
+  number: 7
 
 outputs:
   - package:
@@ -59,6 +59,11 @@ outputs:
         - gtest
         - libode
         - bullet-cpp
+      # GTest is only used to build the test executables and is not linked by
+      # any installed library.
+      ignore_run_exports:
+        from_package:
+          - gtest
       run_exports:
         - ${{ pin_subpackage(cxx_name, upper_bound='x') }}
     tests:
