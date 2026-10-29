@@ -3,7 +3,7 @@ schema_version: 1
 context:
   component_name: physics
   repo_name: ${{ "gz-" ~ component_name }}
-  version: "9.5.2"
+  version: "9.6.0"
   major_version: "9"
   name: ${{ repo_name }}
   component_version: ${{ component_name ~ major_version }}
@@ -15,7 +15,7 @@ recipe:
 
 source:
   - url: https://github.com/gazebosim/${{ repo_name }}/archive/${{ repo_name }}${{ major_version }}_${{ version }}.tar.gz
-    sha256: f016d66717222dde3cf5d3e86fa1a255477d0227fe9b131bf5907381bd44dd8c
+    sha256: 645b358df6b15d49e63014161ec5235fae7a0999ae0e12f2ce7da5e5ccb53860
     patches:
       - disable_fake_install.patch
       - if: win
